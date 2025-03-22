@@ -15,7 +15,7 @@ data "aws_ami" "app_ami" {
 }
 
 data "aws_vps" "default" {
-  Name = "Learning Terraform"
+  default = true
 }
 
 resource "aws_instance" "web" {
