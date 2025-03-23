@@ -77,28 +77,11 @@ module "blog_alb" {
     }
   }
 
-  access_logs = {
-    bucket = "my-alb-logs"
-  }
-
   listeners = {
     ex-http-https-redirect = {
-      port     = 80
-      protocol = "HTTP"
-      redirect = {
-        port        = "443"
-        protocol    = "HTTPS"
-        status_code = "HTTP_301"
-      }
-    }
-    ex-https = {
-      port            = 443
-      protocol        = "HTTPS"
-      certificate_arn = "arn:aws:iam::123456789012:server-certificate/test_cert-123456789012"
-
-      forward = {
-        target_group_key = "ex-instance"
-      }
+      port               = 80
+      protocol           = "HTTP"
+      target_group_index = 0
     }
   }
 
@@ -108,7 +91,7 @@ module "blog_alb" {
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
-      target_id        = "i-0f6d38a07d50d080f"
+      target_id        = aws_instance.blog.id
     }
   }
 
