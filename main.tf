@@ -46,7 +46,7 @@ module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 6.0"
 
-  name           = "blog-alb"
+  name    = "blog-alb"
 
   load_balancer_type = "application"
 
@@ -61,7 +61,7 @@ module "alb" {
       port             = 80
       target_type      = "instance"
       targets = {
-        my_target {
+        my_target = {
           target_id    = aws_instance.blog.id
           port         = 80
         }         
