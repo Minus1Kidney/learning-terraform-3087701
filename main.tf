@@ -42,7 +42,7 @@ resource "aws_instance" "web" {
   }
 }
 
-module "blog_alb" {
+module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 6.0"
 
