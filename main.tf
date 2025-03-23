@@ -21,8 +21,9 @@ module "blog_vpc" {
   cidr = "10.0.0.0/16"
 
   azs             = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
-
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+
+  enable_nat_gateway = true
 
   tags = {
     Terraform = "true"
@@ -30,13 +31,12 @@ module "blog_vpc" {
   }
 }
 
-
 resource "aws_instance" "web" {
   ami           = data.aws_ami.app_ami.id
   instance_type = var.instance_type
+ 
+  subnet_id              = module.blog_vpc.public_subnets[0]
   vpc_security_group_ids = [module.blog_sg.security_group_id]
-
-  subnet_id = module.blog_vpc.public_subnets[0]
 
   tags = {
     Name = "Learning Terraform"
